@@ -1,0 +1,25 @@
+ID_KEY: item_id
+CUTOFF: 5
+
+LOGGING:
+  LEVEL: INFO
+
+
+ELASTICSEARCH:
+  SESSION_KWARGS:
+    hosts:
+      - localhost:9200
+    use_ssl: false
+    verify_certs: false
+    ssl_show_warn: false
+  INDEX: asset-index
+
+RABBIT:
+  SESSION_KWARGS:
+    USER: guest
+    PASSWORD: *****
+    VHOST: default
+    HOST: localhost
+    HEARTBEAT: 100
+    EXCHANGE: exchange_name
+  ROUTING_KEY: rounting_key
