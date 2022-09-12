@@ -1,0 +1,4 @@
+elasticsearch==7.13.1
+elasticsearch-dsl==7.4.0
+pika==1.2.1
+PyYAML==5.4.1
