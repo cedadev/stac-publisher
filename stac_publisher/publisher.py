@@ -52,7 +52,7 @@ class Publisher:
         self.producer = RabbitProducer(self.rabbit_conf.get("SESSION_KWARGS"))
 
         self.search = Search(using=es_client, index=self.es_conf.get("INDEX")).filter(
-            "term", agregated=False
+            "term", status="new"
         )
 
         self.update = UpdateByQuery(using=es_client, index=self.es_conf.get("INDEX"))
@@ -124,7 +124,7 @@ class Publisher:
 
         update_query = self.update.query(
             "terms", **{f"properties.{self.conf.get('ID_KEY')}": ids}
-        ).script(source="ctx._source.agregated = 'true'", lang="painless")
+        ).script(source="ctx._source.status = 'queued'", lang="painless")
 
         update_query.execute()
 
