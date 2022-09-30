@@ -15,7 +15,7 @@ import yaml
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, UpdateByQuery
 
-from rabbit import RabbitProducer
+from stac_publisher.rabbit import RabbitProducer
 
 log = logging.getLogger(__name__)
 

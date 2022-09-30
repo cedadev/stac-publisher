@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from publisher import Publisher
+from stac_publisher.publisher import Publisher
 
 Publisher().run()
