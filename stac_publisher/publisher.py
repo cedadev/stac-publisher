@@ -68,7 +68,7 @@ class Publisher:
         """
 
         query = self.search.filter(
-            "range", mod_time={operator: cutoff.strftime("%Y%m%dT%H%M%SZ")}
+            "range", mod_time={operator: cutoff.strftime("%Y-%m-%dT%H:%M:%S")}
         )
 
         log.debug("Querying elasticsearch.")
