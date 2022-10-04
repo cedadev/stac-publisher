@@ -99,6 +99,7 @@ class RabbitConnection:
         self._channel.exchange_declare(
             exchange=self.exchange.get("NAME"),
             exchange_type=self.exchange.get("TYPE", "topic"),
+            **self.exchange.get("KWARGS", {}),
         )
 
     def close(self) -> None:
