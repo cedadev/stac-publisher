@@ -21,5 +21,7 @@ RABBIT:
     VHOST: default
     HOST: localhost
     HEARTBEAT: 100
-    EXCHANGE: exchange_name
+    EXCHANGE:
+      NAME: exchange_name
+      TYPE: fanout
   ROUTING_KEY: rounting_key

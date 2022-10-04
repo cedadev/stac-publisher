@@ -35,7 +35,7 @@ class RabbitConfiguration:
         self._exchange = config.get("EXCHANGE")
 
     @property
-    def exchange(self) -> str:
+    def exchange(self) -> dict:
         """
         Exchange for Rabbit
         """
@@ -62,7 +62,7 @@ class RabbitConnection:
         return self._channel
 
     @property
-    def exchange(self) -> str:
+    def exchange(self) -> dict:
         """
         Exchange of Rabbit Connection
         """
@@ -96,7 +96,10 @@ class RabbitConnection:
         )
 
         self._channel = self._connection.channel()
-        self._channel.exchange_declare(exchange=self.exchange, exchange_type="fanout")
+        self._channel.exchange_declare(
+            exchange=self.exchange.get("NAME"),
+            exchange_type=self.exchange.get("TYPE", "topic"),
+        )
 
     def close(self) -> None:
         """
