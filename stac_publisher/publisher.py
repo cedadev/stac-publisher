@@ -79,7 +79,10 @@ class Publisher:
         for hit in response.hits:
             sur_id = hit[self.conf.get("ID_KEY")]
             if sur_id not in messages:
-                messages[sur_id] = {"uri": sur_id}
+                messages[sur_id] = {
+                    "uri": sur_id,
+                    "description_path": hit["description_path"],
+                }
 
         return messages
 
