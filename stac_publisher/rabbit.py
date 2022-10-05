@@ -144,11 +144,11 @@ class RabbitProducer:
 
         log.debug(
             "Publishing message to exchange %s, with routing key %s",
-            self._connection.exchange,
+            self._connection.exchange.get("NAME"),
             routing_key,
         )
         self._connection.channel.basic_publish(
-            exchange=self._connection.exchange,
+            exchange=self._connection.exchange.get("NAME"),
             routing_key=routing_key,
             body=json.dumps(body),
         )
