@@ -84,6 +84,8 @@ class Publisher:
                     "description_path": hit["description_path"],
                 }
 
+        log.info("Messages recieved: %s", messages)
+
         return messages
 
     def filter_messages(self, old_messages: dict, young_messages: dict) -> list:
@@ -111,19 +113,23 @@ class Publisher:
         :param operator: the comparison operator to use in the ES search
         :return: set of relevant messages
         """
+        log.info("Publishing messages: %s", messages)
+
         with self.producer as producer:
             for message in messages:
                 producer.publish(self.rabbit_conf.get("ROUTING_KEY"), message)
 
     def update_subs(self, messages: list) -> None:
         """
-        Update the sub types 'agregated' facet.
+        Update the sub types 'status' facet.
 
         :param messages: list of messages include sur type ids
         :return: None
         """
 
         ids = [message["uri"] for message in messages]
+
+        log.info("Updating ids: %s", ids)
 
         update_query = self.update.query(
             "terms", **{f"properties.{self.conf.get('ID_KEY')}": ids}
