@@ -79,11 +79,17 @@ class Publisher:
 
         log.info("Elasticsearch count: %s", response.hits.total)
 
-        log.info("Elasticsearch hits: %s", hits)
-
         messages = {}
         for hit in hits:
             sur_id = hit[self.conf.get("ID_KEY")]
+
+            log.info(
+                "Elasticsearch hit for %s : %s : %s",
+                self.conf.get("ID_KEY"),
+                sur_id,
+                hit,
+            )
+
             if sur_id not in messages:
                 messages[sur_id] = {
                     "uri": sur_id,
