@@ -51,9 +51,12 @@ class Publisher:
 
         self.producer = RabbitProducer(self.rabbit_conf.get("SESSION_KWARGS"))
 
-        self.search = Search(
-            using=es_client, index=self.es_conf.get("INDEX"), size=10000
-        ).filter("term", status="new")
+        print("size")
+        self.search = (
+            Search(using=es_client, index=self.es_conf.get("INDEX"))
+            .extra(size=10000)
+            .filter("term", status="new")
+        )
 
         self.update = UpdateByQuery(using=es_client, index=self.es_conf.get("INDEX"))
 
