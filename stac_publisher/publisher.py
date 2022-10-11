@@ -75,8 +75,14 @@ class Publisher:
 
         response = query.execute()
 
+        hits = list(response.hits)
+
+        log.info("Elasticsearch count: %s", response.hits.total)
+
+        log.info("Elasticsearch hits: %s", hits)
+
         messages = {}
-        for hit in response.hits:
+        for hit in hits:
             sur_id = hit[self.conf.get("ID_KEY")]
             if sur_id not in messages:
                 messages[sur_id] = {
