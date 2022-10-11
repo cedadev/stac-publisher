@@ -145,8 +145,12 @@ class Publisher:
         log.info("Updating ids: %s", ids)
 
         update_query = self.update.query(
-            "terms", **{f"properties.{self.conf.get('ID_KEY')}": ids}
-        ).script(source="ctx._source.status = 'queued'", lang="painless")
+            "terms", **{f"{self.conf.get('ID_KEY')}": ids}
+        ).script(
+            source="ctx._source.status = params.status",
+            lang="painless",
+            params={"status": "queued"},
+        )
 
         update_query.execute()
 
