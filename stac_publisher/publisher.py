@@ -52,7 +52,7 @@ class Publisher:
         self.producer = RabbitProducer(self.rabbit_conf.get("SESSION_KWARGS"))
 
         self.search = Search(using=es_client, index=self.es_conf.get("INDEX")).filter(
-            "term", status="new"
+            "term", status="new", size=10000
         )
 
         self.update = UpdateByQuery(using=es_client, index=self.es_conf.get("INDEX"))
@@ -83,7 +83,7 @@ class Publisher:
         for hit in hits:
             sur_id = hit[self.conf.get("ID_KEY")]
 
-            log.info(
+            log.debug(
                 "Elasticsearch hit for %s : %s : %s",
                 self.conf.get("ID_KEY"),
                 sur_id,
@@ -125,6 +125,7 @@ class Publisher:
         :param operator: the comparison operator to use in the ES search
         :return: set of relevant messages
         """
+
         log.info("Publishing messages: %s", messages)
 
         with self.producer as producer:
