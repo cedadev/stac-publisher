@@ -73,7 +73,7 @@ class Publisher:
             "range", mod_time={operator: cutoff.strftime("%Y-%m-%dT%H:%M:%S")}
         ).sort("mod_time")
 
-        log.debug("Querying elasticsearch.")
+        log.debug("Querying elasticsearch: %s", query.to_dict())
 
         response = query.execute()
 
@@ -96,7 +96,7 @@ class Publisher:
                     "description_path": hit["description_path"],
                 }
 
-        log.info("Messages recieved: %s", messages)
+        log.debug("Messages recieved: %s", messages)
 
         return messages
 
