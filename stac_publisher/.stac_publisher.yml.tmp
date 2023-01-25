@@ -25,3 +25,8 @@ RABBIT:
       NAME: exchange_name
       TYPE: fanout
   ROUTING_KEY: rounting_key
+
+STOCKTAKE:
+  FBI_INDEX: fbi
+  STAC_INDEX: stac
+  STOCK_INDEX: stock

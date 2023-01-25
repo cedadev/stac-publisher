@@ -51,7 +51,6 @@ class Publisher:
 
         self.producer = RabbitProducer(self.rabbit_conf.get("SESSION_KWARGS"))
 
-        print("size")
         self.search = (
             Search(using=es_client, index=self.es_conf.get("INDEX"))
             .extra(size=10000)
@@ -72,18 +71,16 @@ class Publisher:
 
         query = self.search.filter(
             "range", mod_time={operator: cutoff.strftime("%Y-%m-%dT%H:%M:%S")}
-        )
+        ).sort("mod_time")
 
         log.debug("Querying elasticsearch.")
 
         response = query.execute()
 
-        hits = list(response.hits)
-
         log.info("Elasticsearch count: %s", response.hits.total)
 
         messages = {}
-        for hit in hits:
+        for hit in response.hits:
             sur_id = hit[self.conf.get("ID_KEY")]
 
             log.debug(
